@@ -1,4 +1,4 @@
-import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
+import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting, BaseComponent} from 'obsidian';
 
 // Remember to rename these classes and interfaces!
 
@@ -13,8 +13,29 @@ const DEFAULT_SETTINGS: MyPluginSettings = {
 export default class MyPlugin extends Plugin {
 	settings: MyPluginSettings;
 
+
+
 	async onload() {
 		await this.loadSettings();
+		// app.workspace.getActiveViewOfType(MarkdownView)
+debugger
+		const view = this.app.workspace.getActiveViewOfType(MarkdownView);
+		let Morecontainer = view?.containerEl.querySelector("#cMenuToolbarPopoverBar") as HTMLElement
+		debugger
+// 		const book = containerEl.createEl("div");
+// book.createEl("div", { text: "How to Take Smart Notes" });
+// book.createEl("small", { text: "Sönke Ahrens" });
+// 		new ButtonComponent(this.app).open();
+		// Make sure the user is editing a Markdown file.
+		if (view) {
+			const cursor = view.editor.getCursor();
+			debugger
+			// ...
+		}
+
+// this.registerView("sample-view", (leaf) => {
+// 	leaf.
+// })
 
 		// This creates an icon in the left ribbon.
 		const ribbonIconEl = this.addRibbonIcon('dice', 'Sample Plugin', (evt: MouseEvent) => {
@@ -131,4 +152,14 @@ class SampleSettingTab extends PluginSettingTab {
 					await this.plugin.saveSettings();
 				}));
 	}
+}
+
+class ButtonComponent extends BaseComponent {
+	containerEl: HTMLElement;
+	constructor(containerEl: HTMLElement){
+		super();
+		this.containerEl.addClass('button-component');
+		this.containerEl.createEl('button', {text: 'Click me!'});
+	}
+
 }
